@@ -1,0 +1,34 @@
+<!-- <div class="priorityRow">
+    <div class="item lowest">
+        <h2>Lowest</h2>
+        <ul>
+            <li *ngFor="let item of priorityGrouped['Low']">{{item.taskName}}</li>
+        </ul>
+    </div>
+    <div class="item low">
+        <h2>Low</h2>
+    </div>
+    <div class="item medium">
+        <h2>Medium</h2>
+    </div>
+    <div class="item high">
+        <h2>High</h2>
+    </div>
+    <div class="item highest">
+        <h2>Highest</h2>
+    </div>
+</div> -->
+
+<div class="priorityRow">
+    <ng-container *ngFor="let priority of priorityGrouped | keyvalue">
+        <div class="item" [class]="priority.key">
+            <h2>{{ priority.key }}</h2>
+            <ul>
+                <li *ngFor="let item of priority.value">
+                   <span> {{ item.taskName }}</span>
+                   <span><i class="pi pi-eye"></i></span>
+                </li>
+            </ul>
+        </div>
+      </ng-container>
+</div>

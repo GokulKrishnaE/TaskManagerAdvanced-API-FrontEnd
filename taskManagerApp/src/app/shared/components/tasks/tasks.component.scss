@@ -1,0 +1,89 @@
+// Status Colors
+.in_progress {
+    background-color: rgb(0, 115, 192); // Green
+    border-color: rgb(0, 115, 192);
+    color: white;
+}
+.todo {
+    background-color: rgb(155, 155, 155); // Blue
+    border-color: rgb(155, 155, 155);
+    color: black;
+}
+.completed {
+    background-color: rgb(34, 197, 94); // Bright Green
+    border-color: rgb(34, 197, 94);
+    color: white;
+}
+.on_hold {
+    background-color: rgb(255, 165, 0); // Orange
+    border-color: rgb(255, 165, 0);
+    color: white;
+}
+.waiting_feedback {
+    background-color: rgb(255, 193, 7); // Yellow
+    border-color: rgb(255, 193, 7);
+    color: black;
+}
+.abandoned {
+    background-color: rgb(255, 82, 82); // Gray
+    border-color: rgb(255, 82, 82);
+    color: white;
+}
+
+// Priority Colors
+.lowest {
+    background-color: rgb(173, 216, 230); // Light Blue
+    border-color: rgb(173, 216, 230);
+    color: black;
+}
+.low {
+    background-color: rgb(100, 149, 237); // Cornflower Blue
+    border-color: rgb(100, 149, 237);
+    color: white;
+}
+.medium {
+    background-color: rgb(255, 193, 7); // Yellow
+    border-color: rgb(255, 193, 7);
+    color: black;
+}
+.high {
+    background-color: rgb(255, 87, 34); // Deep Orange
+    border-color: rgb(255, 87, 34);
+    color: white;
+}
+.highest {
+    background-color: rgb(211, 47, 47); // Dark Red
+    border-color: rgb(211, 47, 47);
+    color: white;
+}
+
+.save{
+    background-color: #9fe75b;
+    border-color: #9fe75b;
+}
+
+.delete{
+    background-color: red;
+    i{
+        color: white;
+    }
+}
+.edit{
+    background-color: rgb(19, 149, 255);
+    i{
+        color: white;
+    }
+}
+
+.pill{
+    width: auto;
+    border-radius: 24px;
+    padding: 8px 20px;
+    &.completed{
+        background-color: rgb(48, 158, 48);;
+        color: white;
+    }
+    &.todo{
+        background-color: rgb(255, 230, 88);
+    }
+}

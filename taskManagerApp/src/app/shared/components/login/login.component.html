@@ -1,0 +1,26 @@
+
+<div class="container-fluid">
+    <div class="d-flex align-items-center vh-100">
+       <div class="w-100">
+            <div class="row">
+                <div class="col-lg-6"></div>
+                <div class="col-lg-6">
+                    <div class="loginFormWrapper d-flex justify-content-center align-items-center">
+                        <form class="loginForm w-75" [formGroup]="loginForm" (submit)="login()">
+                            <div class="form-group mb-3">
+                                <label for="username" class="fw-bold mb-1">Username</label>
+                                <input type="text" id="username" formControlName="username" class="form-control">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="password" class="fw-bold mb-1">Password</label>
+                                <input type="password" formControlName="password" id="password" class="form-control">
+                            </div>
+                            <button class="btn btn-primary mb-4" type="submit">Login</button>
+                            <p>Dont' have an account? <a [routerLink]="'/register'">Create One</a></p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+       </div>
+    </div>
+</div>
