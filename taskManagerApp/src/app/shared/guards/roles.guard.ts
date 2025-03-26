@@ -19,7 +19,11 @@ export class RolesGuard implements CanActivate {
       return true;
     }
 
-    this.router.navigate(['/unauthorized']);
+    const currentUrl = this.router.url.split('/')[1];
+    this.router.navigate([`/${currentUrl}/unauthorized`]);
+    setTimeout(()=>{
+      this.authService.logout()
+    },5000)
     return false;
   }
 }

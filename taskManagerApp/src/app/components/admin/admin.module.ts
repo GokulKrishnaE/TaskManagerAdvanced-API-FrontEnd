@@ -6,6 +6,9 @@ import { SharedModule } from 'src/app/shared/modules/shared.module';
 import { AdminLayoutComponent } from './admin.layout.component';
 import { AdminHomeComponent } from './components/admin-home/admin-home.component';
 import { AdminSidebarComponent } from './components/admin-sidebar/admin-sidebar.component';
+import { UserListComponent } from './components/user-list/user-list.component';
+import { UserDetailsComponent } from './components/user-details/user-details.component';
+import { CMSHomeComponent } from './components/CMS/cms-home.component';
 
 
 
@@ -13,7 +16,10 @@ import { AdminSidebarComponent } from './components/admin-sidebar/admin-sidebar.
   declarations: [
     AdminLayoutComponent,
     AdminSidebarComponent,
-    AdminHomeComponent
+    AdminHomeComponent,
+    UserListComponent,
+    UserDetailsComponent,
+    CMSHomeComponent
   ],
   imports: [
     CommonModule,

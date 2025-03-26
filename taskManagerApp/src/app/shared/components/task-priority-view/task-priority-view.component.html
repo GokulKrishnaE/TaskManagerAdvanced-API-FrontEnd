@@ -19,16 +19,35 @@
     </div>
 </div> -->
 
-<div class="priorityRow">
-    <ng-container *ngFor="let priority of priorityGrouped | keyvalue">
-        <div class="item" [class]="priority.key">
-            <h2>{{ priority.key }}</h2>
-            <ul>
-                <li *ngFor="let item of priority.value">
-                   <span> {{ item.taskName }}</span>
-                   <span><i class="pi pi-eye"></i></span>
-                </li>
-            </ul>
-        </div>
-      </ng-container>
+<div class="mb-5" *ngIf="hasTasks()">
+    <app-task-counts [taskCounts]="taskCounts"></app-task-counts>
 </div>
+
+<p class="my-4"><i class="pi pi-info-circle me-3"></i>Drag and drop to change the priority of the tasks</p>
+<div class="priorityRow" cdkDropListGroup *ngIf="tasks.length">
+    <ng-container *ngFor="let priority of priorityGrouped | keyvalue">
+      <div
+        cdkDropList
+        [id]="priority.key"
+        [cdkDropListData]="priority.value"
+        class="item"
+        (cdkDropListDropped)="drop($event,priority.key)"
+      >
+        <h2>{{ priority.key }}</h2>
+        <ul>
+          <li *ngFor="let item of priority.value" class="priorityTaskItem" cdkDrag [cdkDragData]="item">
+           <span>
+            <span class="dragIcon me-2">
+                <i class="pi pi-arrows-alt"></i>
+            </span>
+            <span>{{ item.taskName }}</span>
+           </span>
+            <span><i class="pi pi-eye"></i></span>
+          </li>
+        </ul>
+      </div>
+    </ng-container>
+  </div>
+
+  <div class="alert alert-success" *ngIf="!tasks.length"><p class="mb-0">No Tasks are available</p></div>
+  

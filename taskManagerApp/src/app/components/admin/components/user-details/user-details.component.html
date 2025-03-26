@@ -1,0 +1,13 @@
+<div class="userDetails">
+    <h2 class="userName">{{userDetails?.fullName}}</h2>
+    <p class="userEmail">{{userDetails?.email}}</p>
+
+    <form [formGroup]="rolesForm" (submit)="onRolesChange()">
+      <div *ngFor="let role of userRoles">
+        <label>
+          <input type="checkbox" [formControlName]="role.value"> {{ role.display }} <!-- role[0] = value, role[1] = display -->
+        </label>
+      </div>
+      <button class="btn btn-primary mt-4">Update Roles</button>
+    </form>
+</div>

@@ -65,4 +65,14 @@ export class AuthService{
         return roles ? JSON.parse(roles) : [];
     }
 
+    getUserRole(): string {
+        const roles = JSON.parse(localStorage.getItem('Roles') || '[]');
+        if (roles.includes('Admin') || roles.includes('GlobalAdmin')) return 'admin';
+        else return 'user';
+    }
+      
+    getBasePath(): string {
+    return `/${this.getUserRole()}`;
+    }
+
 }

@@ -40,10 +40,10 @@ export class LoginComponent implements OnInit{
             if(res.success){
                 console.log(this.authService.getUserRoles())
                 if(this.authService.getUserRoles()?.includes('GlobalAdmin') || this.authService.getUserRoles()?.includes('Admin')){
-                    this.router.navigate(['/admin'])
+                    this.router.navigate(['/admin/dashboard'])
                 }
                 else{
-                    this.router.navigate(['/user'])
+                    this.router.navigate(['/user/dashboard'])
                 }
             }
             else{

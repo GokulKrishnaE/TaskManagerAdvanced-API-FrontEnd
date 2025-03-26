@@ -7,6 +7,7 @@ import { ErrorComponent } from './shared/components/error/error.component';
 import { RegisterComponent } from './shared/components/register/register.component';
 import { AdminLayoutComponent } from './components/admin/admin.layout.component';
 import { RolesGuard } from './shared/guards/roles.guard';
+import { userGuard } from './shared/guards/user.guard';
 
 const routes: Routes = [
   {path: '', component: LoginComponent},
@@ -16,15 +17,13 @@ const routes: Routes = [
     path: 'user', 
     component: UserLayoutComponent,
     loadChildren:()=>import ('./components/user/user.module').then(mod=>mod.UserModule),
-    canActivate: [RolesGuard], 
-    data: { roles: ['User'] } 
+    canActivate: [userGuard]
   },
   {
     path: 'admin',
     component: AdminLayoutComponent,
     loadChildren: ()=> import('./components/admin/admin.module').then(mod=>mod.AdminModule),
-    canActivate: [RolesGuard], 
-    data: { roles: ['GlobalAdmin','Admin'] } 
+    canActivate: [userGuard]
   },
   {path: '**', component: ErrorComponent}
 ];

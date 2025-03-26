@@ -2,15 +2,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap');
 body{
     font-family: "Titillium Web", sans-serif;
+    background-color: rgb(247, 253, 255);
 }
 .outerWrapper{
-    padding-top: 110px;
+    padding-top: 80px;
 }
 
 .btn{
     border-radius: 24px;
     padding: 8px 30px;
-    font-weight: 600;
+    font-weight: 700;
     &.noStyle{
         background: none;
         border: none;
@@ -66,7 +67,7 @@ body{
         padding: 20px 25px;
         display: inline-block;
         width: 100%;
-        background-color: rgb(243, 243, 243);
+        background-color: rgb(255, 255, 255);
         font-size: 18px;
         &.active{
             color: rgb(15, 175, 0);
@@ -82,9 +83,13 @@ body{
 
     .leftContent{
        width: 250px;
+       position: fixed;
+       background-color: white;
+       height: 100%;
     }
     .rightContent{
-        width: calc(100% - 250px);
+        width: 100%;
+        padding: 30px 30px 30px 280px;
     }
 }
 
@@ -109,4 +114,129 @@ body{
     font-size: 26px;
     font-weight: 700;
     margin-bottom: 26px;
+}
+
+
+.roles{
+    .role{
+        display: inline-block;
+        padding: 5px 10px;
+        border-radius: 24px;
+        background-color: rgb(39, 37, 37);
+        color: white;
+        &:not(:last-child){
+            margin-right: 10px;
+        }
+    }
+}
+
+.p-datepicker table td > span{
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+// task count
+
+.tasksCountOverviewRow{
+    display: flex;
+    gap: 30px;
+
+    .item{
+        width: 20%;
+        padding: 10px 20px;
+        max-width: 120px;
+        border-left: 5px solid transparent;
+        box-shadow: 2px 2px 5px rgba($color: #000000, $alpha: 0.1);
+        p{
+            margin: 0;
+            font-size: 40px;
+        }
+        p.priority{
+            font-size: 16px;
+            font-weight: 700;
+        }
+        h2{
+            font-size: 26px;
+            // font-weight: 700;
+        }
+        &.lowest{
+            // background-color: rgb(199, 255, 199);
+            background-color: white;
+            border-left-color: rgb(0, 204, 0);
+            h2{
+                // color: rgb(0, 255, 0);
+            }
+
+        }
+        &.low{
+            // background-color: rgb(217, 255, 199);
+            background-color: white;
+            border-left-color: rgb(0, 177, 118);
+            h2{
+                // color: rgb(81, 255, 0);
+            }
+        }
+        &.medium{
+            // background-color: rgb(255, 254, 199);
+            background-color: white;
+            border-left-color: rgb(216, 202, 0);
+            h2{
+                // color: rgb(255, 251, 0)
+            }
+        }
+        &.high{
+            // background-color: rgb(255, 215, 199);
+            background-color: white;
+            border-left-color: rgb(194, 94, 0);
+            h2{
+                // color: rgb(255, 72, 0)
+            }
+        }
+        &.highest {
+            // background-color: rgb(255, 199, 199);
+            background-color: white;
+            border-left-color: rgb(192, 0, 0);
+            h2{
+                // color: rgb(255, 0, 0)
+            }
+        }
+    }
+}
+
+
+// task priority
+.priorityRow{
+    display: flex;
+    gap: 20px;
+    height: 100%;
+    .item{
+        width: 20%;
+        background-color: rgb(255, 255, 255);
+        box-shadow: 2px 2px 5px rgba($color: #000000, $alpha: 0.1);
+        height: 100%;
+        padding: 20px;
+        h2{
+            font-size: 20px;
+            font-weight: 700;
+        }
+        ul{
+            margin: 0;
+            padding: 0;
+            margin-top: 30px;
+        }
+    }
+}
+
+.priorityTaskItem{
+    padding: 10px 25px;
+    background-color: rgb(168, 255, 236);
+    border-radius: 24px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    &:not(:last-child){
+        margin-bottom: 20px;
+    }
 }

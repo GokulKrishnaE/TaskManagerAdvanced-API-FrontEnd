@@ -3,7 +3,7 @@ import { ApiService } from '../../services/api.service';
 import { AuthService } from '../../services/auth.service';
 import { GlobalService } from '../../services/global.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Prioriy_Values, Status_Values } from '../../models/task.model';
+import { Prioriy_Values, Status_Values, TaskResponse } from '../../models/task.model';
 
 @Component({
   selector: 'app-tasks',
@@ -13,11 +13,18 @@ import { Prioriy_Values, Status_Values } from '../../models/task.model';
 export class TasksComponent implements OnInit,OnDestroy{
 
   tasks:any[] = []
+  overDueTasks:any[] = []
+  todyTasks:any[] = []
+  upcomingTasks:any[] = []
   taskCounts!:{[key:string]: number}
   isAddMode:boolean = false
+  tableView:boolean = false
   getTask!:any
   deleteTaskId:any = null
+  editTaskId:any = null
   showDeleteModal:boolean = false
+  showEditModel:boolean = false
+  deadlineMinDate:Date = new Date()
 
   taskForm!:FormGroup
 
@@ -41,10 +48,16 @@ export class TasksComponent implements OnInit,OnDestroy{
   getTasks(){
     this.getTask =this.apiService.get(`tasks/user-tasks/${this.authService.getUserId()}`)
     .subscribe({
-      next: (data:any[])=>{
-        this.tasks = data
+      next: (data:any)=>{
+        this.tasks = data.allTasks
+        this.overDueTasks = data.overdueTasks
+        this.todyTasks = data.todayTasks
+        this.upcomingTasks = data.upcomingTasks
         this.getTaskCounts()
         console.log(this.tasks)
+        console.log(this.overDueTasks)
+        console.log(this.todyTasks)
+        console.log(this.upcomingTasks)
       },
       error: ()=> {
         this.globalService.showToastGlobalError()
@@ -57,7 +70,8 @@ export class TasksComponent implements OnInit,OnDestroy{
       taskName: ['', Validators.required],
       description: ['', Validators.required],
       status: ['Todo'],
-      priority: ['Medium']
+      priority: ['Medium'],
+      deadline: ['']
     })
   }
 
@@ -81,6 +95,12 @@ export class TasksComponent implements OnInit,OnDestroy{
   submitForm(){
     if(this.taskForm.valid){
       let newTask = {...this.taskForm.value, userId:this.authService.getUserId()}
+      if (newTask.deadline) {
+        const selectedDate = new Date(newTask.deadline);
+        selectedDate.setMinutes(selectedDate.getMinutes() - selectedDate.getTimezoneOffset());
+        newTask.deadline = selectedDate.toISOString().split('T')[0];
+      }
+      console.log(newTask)
       this.apiService.post('tasks',newTask).subscribe(
         {next: (data)=>{
           console.log(data)
@@ -99,28 +119,43 @@ export class TasksComponent implements OnInit,OnDestroy{
     }
   }
 
-  editTask(index:number,task:any){
-    console.log(task,index)
-    this.editIndex = index;
+  editTaskModel(index:number,task:any){
+    this.showEditModel = true
+    this.editTask(index,task,false)
+  }
+
+  editTask(index:number,task:any,tableEdit=true){
+    this.editTaskId = task.id
+    if(tableEdit){
+      this.editIndex = index;
+    }
     this.taskForm.patchValue({
       taskName: task.taskName,
       description: task.description,
       status: task.status,
-      priority: task.priority
+      priority: task.priority,
+      deadline: task.deadline ? new Date(task.deadline) : null
     });
   }
 
-  saveTask(task:any){
+  saveTask(){
     if(this.taskForm.valid){
-      let updatedTask = {id:task.id,...this.taskForm.value, userId:this.authService.getUserId()}
+      let updatedTask = {id:this.editTaskId,...this.taskForm.value, userId:this.authService.getUserId()}
+      console.log(updatedTask)
       if(this.taskForm.value.status === 'Completed'){
         updatedTask.isCompleted = true
       }
+      if (updatedTask.deadline) {
+        const selectedDate = new Date(updatedTask.deadline);
+        selectedDate.setMinutes(selectedDate.getMinutes() - selectedDate.getTimezoneOffset());
+        updatedTask.deadline = selectedDate.toISOString().split('T')[0];
+      }
       this.apiService.put('tasks',updatedTask).subscribe({
         next: (data:any)=>{
-          console.log(data)
           this.globalService.showToast('success','Success',data.message)
           this.editIndex = null
+          this.showEditModel = false
+          this.editTaskId = null
           this.taskForm.reset()
           this.getTasks()
         },
@@ -135,6 +170,8 @@ export class TasksComponent implements OnInit,OnDestroy{
   }
   closeEdit(){
     this.editIndex = null;
+    this.showEditModel = false
+    this.taskForm.reset()
   }
   deleteWarning(id:any){
     this.deleteTaskId = id
@@ -156,5 +193,9 @@ export class TasksComponent implements OnInit,OnDestroy{
 
   hasTasks(): boolean {
     return this.taskCounts && Object.keys(this.taskCounts).length > 0;
+  }
+
+  toggleTableView(){
+    this.tableView = !this.tableView
   }
 }

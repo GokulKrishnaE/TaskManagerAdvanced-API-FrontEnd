@@ -87,3 +87,27 @@
         background-color: rgb(255, 230, 88);
     }
 }
+
+
+.taskbar{
+    padding: 15px;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.itemRow{
+    display: flex;
+    gap: 30px;
+
+    .item{
+        width: 20%;
+        padding: 10px;
+        max-width: 240px;
+        border-left: 5px solid transparent;
+    }
+}

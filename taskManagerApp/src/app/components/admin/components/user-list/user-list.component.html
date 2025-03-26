@@ -1,0 +1,89 @@
+
+<div class="text-end mb-5"><button class="btn btn-primary" (click)="createUser()">Create a User</button></div>
+
+<div *ngIf="createUserOpen">
+    <form [formGroup]="createUserForm" (ngSubmit)="onCreateUser()">
+    
+        <label>Full Name:</label>
+        <input type="text" formControlName="fullName" class="form-control">
+        <div *ngIf="createUserForm.get('fullName')?.invalid && createUserForm.get('fullName')?.touched">
+          Full Name is required.
+        </div>
+    
+        <label>Email:</label>
+        <input type="email" formControlName="email" class="form-control">
+        <div *ngIf="createUserForm.get('email')?.invalid && createUserForm.get('email')?.touched">
+          Enter a valid email.
+        </div>
+    
+        <label>Username:</label>
+        <input type="text" formControlName="username" class="form-control">
+        <div *ngIf="createUserForm.get('username')?.invalid && createUserForm.get('username')?.touched">
+          Password must be at least 6 characters.
+        </div>
+
+        <label>Password:</label>
+        <input type="password" formControlName="password" class="form-control">
+        <div *ngIf="createUserForm.get('password')?.invalid && createUserForm.get('password')?.touched">
+          Password must be at least 6 characters.
+        </div>
+    
+        <label>Assign Roles:</label>
+        <div *ngFor="let role of roles; let i = index">
+          <input type="checkbox" [formControlName]="role.value"> {{ role.display }}
+        </div>
+    
+        <button type="submit" class="btn btn-primary" [disabled]="createUserForm.invalid">Create User</button>
+      </form>
+    
+</div>
+
+
+<p-table [value]="allUsers">
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Roles</th>
+            <th>Actions</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-user>
+        <tr>
+            <td>{{ user.fullName }}</td>
+            <td>{{ user.email }}</td>
+            <td>
+                <div class="roles">
+                    <span class="role" *ngFor="let role of user.roles">{{role}}</span>
+                </div>
+            </td>
+            <td>
+                <button class="noStyle" (click)="viewUser(user.id)"><i class="pi pi-eye"></i></button>
+                <button class="noStyle" (click)="showDeleteConfirm(user.id)"><i class="pi pi-trash"></i></button>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
+
+
+
+<div class="modal fade show d-block deleteModal" *ngIf="showDeleteModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                
+                <p class="d-flex align-items-center gap-4">
+                    <span class="modalIcon">
+                        <i class="pi pi-trash"></i>
+                    </span>
+                    Do you want to delete the User?
+                </p>
+                <div class="d-flex align-items-center justify-content-between">
+                    <button class="btn btn-secondary">Cancel</button>
+                    <button class="btn btn-primary" (click)="deleteUser()">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-backdrop show" *ngIf="showDeleteModal"></div>

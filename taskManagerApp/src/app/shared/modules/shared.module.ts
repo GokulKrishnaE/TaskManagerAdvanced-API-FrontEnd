@@ -20,6 +20,12 @@ import { RemoveUnderScorePipe } from '../pipes/remove-underscore.pipe';
 import { TaskPriorityViewComponent } from '../components/task-priority-view/task-priority-view.component';
 import { PeopleComponent } from '../components/people/people.component';
 import { TaskCountComponent } from '../components/task-counts/task-counts.component';
+import { SideBarComponent } from '../components/sidebar/sidebar.component';
+import { CalendarModule } from 'primeng/calendar';
+import { TabViewModule } from 'primeng/tabview';
+import { TaskCalendarViewComponent } from '../components/task-calendar-view/task-calenar-view.component';
+import { FullCalendarModule } from '@fullcalendar/angular'; 
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 
 
@@ -34,7 +40,9 @@ import { TaskCountComponent } from '../components/task-counts/task-counts.compon
     RemoveUnderScorePipe,
     TaskPriorityViewComponent,
     PeopleComponent,
-    TaskCountComponent
+    TaskCountComponent,
+    SideBarComponent,
+    TaskCalendarViewComponent
   ],
   imports: [
     CommonModule,
@@ -43,7 +51,11 @@ import { TaskCountComponent } from '../components/task-counts/task-counts.compon
     ReactiveFormsModule,
     ToastModule,
     TableModule,
-    DropdownModule
+    DropdownModule,
+    CalendarModule,
+    TabViewModule ,
+    FullCalendarModule,
+    DragDropModule
   ],
   exports:[
     CommonModule,
@@ -57,7 +69,13 @@ import { TaskCountComponent } from '../components/task-counts/task-counts.compon
     DropdownModule,
     TaskPriorityViewComponent,
     PeopleComponent,
-    TaskCountComponent
+    TaskCountComponent,
+    ReactiveFormsModule,
+    SideBarComponent,
+    CalendarModule,
+    TabViewModule ,
+    FullCalendarModule,
+    DragDropModule
   ],
   providers: [MessageService],
   bootstrap: []

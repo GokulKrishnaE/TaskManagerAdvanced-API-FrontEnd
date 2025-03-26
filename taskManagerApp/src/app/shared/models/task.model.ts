@@ -14,3 +14,10 @@ export const Status_Values = [
     {label: 'Abandoned', value: 'Abandoned'},
     {label: 'On Hold', value: 'On_Hold'},
 ]
+
+export interface TaskResponse {
+    allTasks: any[];
+    overdueTasks: any[];
+    todayTasks: any[];
+    upcomingTasks: any[];
+}

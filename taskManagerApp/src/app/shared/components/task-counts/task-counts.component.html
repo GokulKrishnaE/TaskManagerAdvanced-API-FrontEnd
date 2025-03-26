@@ -1,8 +1,8 @@
-<h2 class="section-title">Task Overview</h2>
+<h2 class="section-title">Task Priorities</h2>
 <div class="tasksCountOverviewRow">
     <ng-container *ngFor="let taskCount of taskCounts | keyvalue">
         <div class="item" [class]="taskCount.key.toLowerCase()">
-            <h2>{{taskCount.key}}</h2>
+            <p class="priority">{{taskCount.key}}</p>
             <p>{{taskCount.value}}</p>
         </div>
     </ng-container>
