@@ -13,49 +13,77 @@
 
     <div class="itemRow">
         <div class="item highest">
-            <p class="fw-bold">Overdue Tasks</p>
-            <p>{{overDueTasks.length}}</p>
+            <div class="d-flex align-items-center justify-content-between">
+                <p class="fw-bold">Overdue Tasks</p>
+                <button class="btn noStyle" (click)="toggleShowSec('overdue')"><i [class]="showOverdueTasksSec ? 'pi pi-eye' : 'pi pi-eye-slash'"></i></button>
+            </div>
+            <p class="count">{{overDueTasks.length}}</p>
         </div>
         <div class="item low">
-            <p class="fw-bold">Todays Tasks</p>
-            <p>{{todyTasks.length}}</p>
+            <div class="d-flex align-items-center justify-content-between">
+                <p class="fw-bold">Todays Tasks</p>
+                <button class="btn noStyle" (click)="toggleShowSec('today')"><i [class]="showTodayTasksSec ? 'pi pi-eye' : 'pi pi-eye-slash'"></i></button>
+            </div>
+            <p class="count">{{todyTasks.length}}</p>
         </div>
         <div class="item medium">
-            <p class="fw-bold">Upcoming Tasks</p>
-            <p>{{upcomingTasks.length}}</p>
+            <div class="d-flex align-items-center justify-content-between">
+                <p class="fw-bold">Upcoming Tasks</p>
+                <button class="btn noStyle" (click)="toggleShowSec('upcoming')"><i [class]="showUpcomingTasksSec ? 'pi pi-eye' : 'pi pi-eye-slash'"></i></button>
+            </div>
+            <p class="count">{{upcomingTasks.length}}</p>
         </div>
     </div>
 </div>
 
 <div class="dashView" *ngIf="!tableView">
-    <div class="todayTasksSec mb-5">
-        <div class="alert alert-success" *ngIf="!todyTasks.length">
-            <h5 class="fw-bold">You don't have any Task sheduled for today!</h5>
+    <div class="overdueTaskSec mb-5" *ngIf="showOverdueTasksSec">
+        <h2 class="section-title">Overdue Tasks</h2>
+        <div class="alert alert-success" *ngIf="!overDueTasks.length">
+            <h5 class="fw-bold mb-0">You don't have any tasks overdue</h5>
         </div>
-        <h2 class="section-title" *ngIf="todyTasks.length">Your Tasks Today</h2>
+        <div class="tasksToday" *ngIf="overDueTasks">
+            <div class="taskbar"  [class]="task.priority.toLowerCase()" *ngFor="let task of overDueTasks; index as i">
+                <span class="taskname" [class]="task.isCompleted ? 'isCompleted' : ''">{{task.taskName}}</span>
+                <span>
+                    <span class="pill me-4" [class]="task.priority.toLowerCase()">{{task.priority}}</span>
+                    <span class="me-2">Due: {{task.deadline|date}}</span>
+                    <button class="btn noStyle me-2"><i class="pi pi-check" [class]="task.isCompleted ? 'isCompleted' : ''"></i></button>
+                    <button class="btn noStyle" (click)="editTaskModel(i,task)"><i class="pi pi-pencil"></i></button>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="todayTasksSec mb-5" *ngIf="showTodayTasksSec">
+        <h2 class="section-title">Your Tasks Today</h2>
+        <div class="alert alert-success" *ngIf="!todyTasks.length">
+            <h5 class="fw-bold mb-0">You don't have any Task sheduled for today!</h5>
+        </div>
         <div class="tasksToday" *ngIf="todyTasks">
             <div class="taskbar"  [class]="task.priority.toLowerCase()" *ngFor="let task of todyTasks; index as i">
-                <span class="taskname">{{task.taskName}}</span>
+                <span class="taskname" [class]="task.isCompleted ? 'isCompleted' : ''">{{task.taskName}}</span>
                 <span>
-                    <span>Due: {{task.deadline|date}}</span>
-                    <button class="btn noStyle"><i class="pi pi-check"></i></button>
+                    <span class="pill me-4" [class]="task.priority.toLowerCase()">{{task.priority}}</span>
+                    <span class="me-2">Due: {{task.deadline|date}}</span>
+                    <button class="btn noStyle me-2"><i class="pi pi-check" [class]="task.isCompleted ? 'isCompleted' : ''"></i></button>
                     <button class="btn noStyle" (click)="editTaskModel(i,task)"><i class="pi pi-pencil"></i></button>
                 </span>
             </div>
         </div>
     </div>
     
-    <div class="upComingTasksSec">
+    <div class="upComingTasksSec" *ngIf="showUpcomingTasksSec">
+        <h2 class="section-title">Upcoming Tasks</h2>
         <div class="alert alert-success" *ngIf="!upcomingTasks.length">
-            <h5 class="fw-bold">You have no tasks Scheduled for next 7 days</h5>
+            <h5 class="fw-bold mb-0">You have no tasks Scheduled for next 7 days</h5>
         </div>
-        <h2 class="section-title" *ngIf="upcomingTasks.length">Upcoming Tasks</h2>
         <div class="tasksToday" *ngIf="todyTasks">
             <div class="taskbar" [class]="task.priority.toLowerCase()" *ngFor="let task of upcomingTasks; index as i">
-                <span class="taskname">{{task.taskName}}</span>
+                <span class="taskname" [class]="task.isCompleted ? 'isCompleted' : ''">{{task.taskName}}</span>
                 <span>
-                    <span>Due: {{task.deadline|date}}</span>
-                    <button class="btn noStyle"><i class="pi pi-check"></i></button>
+                    <span class="pill me-4" [class]="task.priority.toLowerCase()">{{task.priority}}</span>
+                    <span class="me-2">Due: {{task.deadline|date}}</span>
+                    <button class="btn noStyle me-2"><i class="pi pi-check" [class]="task.isCompleted ? 'isCompleted' : ''"></i></button>
                     <button class="btn noStyle" (click)="editTaskModel(i,task)"><i class="pi pi-pencil"></i></button>
                 </span>
             </div>
@@ -65,7 +93,7 @@
 
 <div class="tableView" *ngIf="tableView">
     <div>
-        <p-table [value]="tasks">
+        <p-table [value]="tasks" #dt styleClass="p-datatable-striped"   [globalFilterFields]="['taskName','description','priority', 'status','deadline']">
             <ng-template pTemplate="header">
                 <tr>
                     <th>Task Name</th>
@@ -74,6 +102,26 @@
                     <th>Task Priority</th>
                     <th>Deadline</th>
                     <th>Created Date</th>
+                    <th></th>
+                </tr>
+                <tr class="filterRow">
+                    <th>
+                        <input class="form-control" pInputText type="text" (input)="applyFilter($event, 'taskName',dt)" placeholder="Filter Task Name" />
+                    </th>
+                    <th>
+                        <input class="form-control" pInputText type="text" (input)="applyFilter($event, 'taskName',dt)" placeholder="Filter Description" />
+                    </th>
+                    <th>
+                        <p-dropdown [options]="status_options" optionLabel="label" optionValue="value"
+                        (onChange)="applyFilter($event, 'prioritystatus', dt)" placeholder="Filter" appendTo="body"></p-dropdown>
+                    </th>
+                    <th>
+                        <p-dropdown [options]="priority_options" optionLabel="label" optionValue="value"
+                        (onChange)="applyFilter($event, 'priority', dt)" placeholder="Filter" appendTo="body"></p-dropdown>
+                    </th>
+                    <th>
+                        <p-calendar (onSelect)="applyFilter($event, 'deadline', dt)"dateFormat="yy-mm-dd" placeholder="Filter Deadline"></p-calendar>
+                    </th>
                     <th></th>
                 </tr>
             </ng-template>
@@ -204,8 +252,11 @@
 </div>
 
 <div class="modal fade show d-block" *ngIf="showEditModel">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
+            <div class="modal-header">
+                <button class="btn-close" (click)="closeEdit()"></button>
+            </div>
             <div class="modal-body">
                 <form [formGroup]="taskForm">
                     <div class="form-group">
@@ -214,7 +265,7 @@
                     </div>
                     <div class="form-group">
                         <label for="">Description</label>
-                        <input type="text" class="form-control" formControlName="description">
+                        <textarea rows="5" type="text" class="form-control" formControlName="description"></textarea>
                     </div>
                     <div class="form-group">
                         <label for="">Status</label>
@@ -228,9 +279,8 @@
                         <label for="">Deadline</label>
                         <p-calendar formControlName="deadline" [minDate]="deadlineMinDate"/>
                     </div>
-                    <div class="d-flex align-items-center justify-content-between">
-                        <button class="btn noStyle" (click)="closeEdit()"><i class="pi pi-times"></i></button>
-                        <button class="btn btn-primary" (click)="saveTask()" [disabled]="!taskForm.valid">Add</button>
+                    <div class="d-flex align-items-center justify-content-end">
+                        <button class="btn btn-primary" (click)="saveTask()" [disabled]="!taskForm.valid">Update</button>
                     </div>
                 </form>
             </div>

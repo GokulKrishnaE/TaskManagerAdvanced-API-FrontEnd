@@ -1,4 +1,5 @@
-﻿using TaskManager.Models;
+﻿using TaskManager.Dtos;
+using TaskManager.Models;
 using TaskManager.Repositories;
 
 namespace TaskManager.Services
@@ -32,7 +33,7 @@ namespace TaskManager.Services
 
         }
 
-        public async Task<IEnumerable<TaskItem>> GetUserTaskAsync(string userId)
+        public async Task<UserTaskResponseDto> GetUserTaskAsync(string userId)
         {
             return await taskRepository.GetAllUserTasksAsync(userId);  
         }
@@ -48,6 +49,7 @@ namespace TaskManager.Services
             existingTask.IsCompleted = task.IsCompleted;
             existingTask.Status = task.Status;
             existingTask.Priority = task.Priority;
+            existingTask.Deadline = task.Deadline;
 
             return await taskRepository.UpdateTaskAsync(existingTask);
         }

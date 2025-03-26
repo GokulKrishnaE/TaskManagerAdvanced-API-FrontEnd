@@ -4,6 +4,7 @@ import { AuthService } from '../../services/auth.service';
 import { GlobalService } from '../../services/global.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Prioriy_Values, Status_Values, TaskResponse } from '../../models/task.model';
+import { Table } from 'primeng/table';
 
 @Component({
   selector: 'app-tasks',
@@ -26,6 +27,10 @@ export class TasksComponent implements OnInit,OnDestroy{
   showEditModel:boolean = false
   deadlineMinDate:Date = new Date()
 
+  showOverdueTasksSec:boolean = true
+  showTodayTasksSec:boolean = true
+  showUpcomingTasksSec:boolean = true
+
   taskForm!:FormGroup
 
   editIndex: number | null = null;
@@ -38,7 +43,6 @@ export class TasksComponent implements OnInit,OnDestroy{
     private authService:AuthService,
     private globalService:GlobalService,
     private fb:FormBuilder) {}
-
 
   ngOnInit(){
     this.getTasks()
@@ -197,5 +201,42 @@ export class TasksComponent implements OnInit,OnDestroy{
 
   toggleTableView(){
     this.tableView = !this.tableView
+  }
+
+  applyFilter(event: any, field: string, dt: Table) {
+
+    let value: string | null = null;
+    let comparisonMethod = ''
+  
+    if (event?.target) {
+      value = (event.target as HTMLInputElement).value;
+      comparisonMethod = 'contains'
+    } 
+    else if (event?.value !== undefined) {
+      value = event.value;
+      comparisonMethod = 'equals'
+    }
+  
+    if (dt) {
+      dt.filter(value, field, comparisonMethod);
+    }
+  }
+
+  toggleShowSec(sec:string){
+    switch(sec){
+      case 'overdue':
+        this.showOverdueTasksSec = !this.showOverdueTasksSec
+        break
+      case 'today':
+        this.showTodayTasksSec = !this.showTodayTasksSec
+        break
+      case 'upcoming':
+        this.showUpcomingTasksSec = !this.showUpcomingTasksSec
+        break
+      default: 
+        this.showOverdueTasksSec = false
+        this.showTodayTasksSec = false
+        this.showUpcomingTasksSec = false
+    }
   }
 }

@@ -17,6 +17,19 @@ body{
         border: none;
         outline: none;
         box-shadow: none !important;
+        padding: 0;
+        background-color: white;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        i{
+            color: black;
+        }
+        &:hover{
+            i{
+                color: rgb(0, 0, 68);
+            }
+        }
     }
     &.round{
         border-radius: 50%;
@@ -145,8 +158,9 @@ body{
         width: 20%;
         padding: 10px 20px;
         max-width: 120px;
-        border-left: 5px solid transparent;
         box-shadow: 2px 2px 5px rgba($color: #000000, $alpha: 0.1);
+        border: 1px solid rgba(0, 0, 0, 0.116);
+        border-left: 5px solid transparent;
         p{
             margin: 0;
             font-size: 40px;
@@ -215,6 +229,7 @@ body{
         box-shadow: 2px 2px 5px rgba($color: #000000, $alpha: 0.1);
         height: 100%;
         padding: 20px;
+        border: 1px solid rgba(0, 0, 0, 0.116);
         h2{
             font-size: 20px;
             font-weight: 700;
@@ -238,5 +253,75 @@ body{
     cursor: pointer;
     &:not(:last-child){
         margin-bottom: 20px;
+    }
+}
+
+// formstyles
+.form-group{
+    margin-bottom: 16px;
+    label{
+        font-weight: 600;
+        margin-bottom: 8px;
+        color: rgb(0, 0, 0);
+    }
+}
+.form-control{
+    border-color: rgb(181, 205, 211);
+    padding: 8px 12px;
+    border-radius: 5px;
+}
+
+p-dropdown,p-calendar{
+    display: block;
+    width: 100%;
+    .p-component,.p-calendar{
+        border-radius: 5px;
+        border-color: rgb(181, 205, 211);
+        width: 100%;
+        .p-dropdown-label,.p-inputtext{
+            padding: 8px 12px;
+        }
+    }
+    
+}
+
+.p-dropdown-items{
+    padding: 0;
+}
+
+
+// table styles
+
+table{
+    border: 1px solid #d4d4ff;
+    thead{
+        tr:first-child{
+            th{
+                background: #d4d4ff;
+            }
+        }
+        .filterRow{
+            th{
+                border: 1px solid #d4d4ff;  
+            }
+        }
+    }
+    tbody{
+        td{
+            border: 1px solid #d4d4ff;
+        }
+    }
+}
+
+full-calendar{
+    table{
+        th,td,a{
+            color: black;
+            text-decoration: none;
+        }
+        th,td{
+            background-color: white;
+            --fc-border-color: #d4d4ff;
+        }
     }
 }

@@ -61,7 +61,8 @@ namespace TaskManager.Services
             {
                 new Claim(JwtRegisteredClaimNames.Sub, user.Id),
                 new Claim("username", user.UserName),
-                new Claim("fullName", user.Fullname)
+                new Claim("fullName", user.Fullname),
+                new Claim("email", user.Email)
             };
 
             // Add roles (if needed)

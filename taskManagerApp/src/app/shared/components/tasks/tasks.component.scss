@@ -98,6 +98,24 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    background-color: white !important;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.068);
+    border: 1px solid rgba(0, 0, 0, 0.116);
+    color: black;
+    .pill{
+        padding: 4px 25px;
+        font-size: 16px;
+    }
+    .taskname{
+        &.isCompleted{
+            text-decoration: line-through;
+        }
+    }
+    .pi-check.isCompleted{
+        color: green;
+        font-weight: bold;
+        font-size: 20px;
+    }
 }
 
 .itemRow{
@@ -109,5 +127,12 @@
         padding: 10px;
         max-width: 240px;
         border-left: 5px solid transparent;
+        border-radius: 10px;
+    }
+    .count{
+        font-size: 20px;
+    }
+    button{
+
     }
 }

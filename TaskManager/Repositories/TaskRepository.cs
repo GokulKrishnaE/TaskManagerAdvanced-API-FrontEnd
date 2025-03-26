@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TaskManager.Data;
+using TaskManager.Dtos;
 using TaskManager.Models;
 
 namespace TaskManager.Repositories
@@ -33,9 +34,22 @@ namespace TaskManager.Repositories
             return await context.Tasks.ToListAsync(); 
         }
 
-        public async Task<IEnumerable<TaskItem>> GetAllUserTasksAsync(string userId)
+        public async Task<UserTaskResponseDto> GetAllUserTasksAsync(string userId)
         {
-            return await context.Tasks.Where(x => x.UserId == userId).ToListAsync();
+            var today = DateTime.UtcNow.Date;
+            var next7Days = today.AddDays(7);
+
+            var tasks = await context.Tasks
+                .Where(x => x.UserId == userId)
+                .ToListAsync();
+
+            return new UserTaskResponseDto
+            {
+                AllTasks = tasks,
+                OverdueTasks = tasks.Where(t => t.Deadline < today).ToList(),
+                TodayTasks = tasks.Where(t => t.Deadline == today).ToList(),
+                UpcomingTasks = tasks.Where(t => t.Deadline > today && t.Deadline <= next7Days).ToList(),
+            };
         }
 
         public async Task<TaskItem> GetTaskByIdAsync(int id)

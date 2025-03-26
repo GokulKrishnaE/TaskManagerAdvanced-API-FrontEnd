@@ -14,5 +14,8 @@ namespace TaskManager.Dtos
 
         public StatusEnum Status { get; set; } = StatusEnum.Todo;
         public string UserId { get; set; }
+
+        public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
+        public DateTime? Deadline { get; set; }
     }
 }

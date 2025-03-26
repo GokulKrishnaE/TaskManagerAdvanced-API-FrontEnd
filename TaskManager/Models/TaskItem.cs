@@ -16,6 +16,9 @@ namespace TaskManager.Models
 
         public PrioritiesEnum Priority { get; set; } = PrioritiesEnum.Medium;
 
+        public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
+        public DateTime? Deadline { get; set; }
+
 
         public string UserId { get; set; }
 

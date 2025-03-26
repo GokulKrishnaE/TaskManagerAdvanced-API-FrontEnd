@@ -6,6 +6,14 @@ namespace TaskManager.Services
     {
 
         public Task<List<string>> GetAllRoles();
-        public Task<AddRolesDto> AssignRolesToUser(AssignRolesDto model);
+        public Task<StatusResponseDto> AssignRolesToUser(AssignRolesDto model);
+
+        public Task<List<UserDto>> getAllUsers(string userEmail);
+
+        public Task<UserDto> GetUserById(string id);
+
+        public Task<StatusResponseDto> CreateUserAdmin(CreateUserDto userModel);
+
+        public Task<StatusResponseDto> DeleteUserAdmin(string id);
     }
 }
